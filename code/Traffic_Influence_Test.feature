@@ -21,7 +21,7 @@
 
 @TI @TIDSanity
 Feature: Automated Traffic Influence API System Integration Test
-
+  
   @TIessionCreateGetDelete
   Scenario: Create Traffic Influence with mandatory parameters
     Given Use the TI MOCK URL
@@ -91,5 +91,26 @@ Feature: Automated Traffic Influence API System Integration Test
     Given Use the TI MOCK URL
     When Create a new TI session along with invalid parameters (e.g. IP, subnet, TCP Ports) 
     Then Response code is 40x
+    
+  @TISessionCreateWithCallback
+  Scenario: Asynchronous callback after creating a resource
+    Given Use the TI MOCK URL
+    Given Use the Mock Database
+    Given I have a notification https endpoint to be notified when something happens on a requested resource
+    Given I Create a new TI with mandatory parameters including a callback notification ID (notificationUri) and callback authToken
+    When I receive the response from the POST request
+    Then Response code is "201"
+    And It should be created a new Traffic Influence
+    And I retrieve the "trafficInfluenceId" from the response body
 
+    # Delay here is to allow time for the asynchronous process to complete.
+    And I wait for "5" seconds
+
+    # This is simplified. You should receive multiple notification to track status change (inprogress, ordered, ...)
+    When I receive a POST to "{$request.body.notificationUri}/event" with the "trafficInfluenceId"
+    And the callback is the previously provided authToken
+    Then I send the HTTP status code is "202"
+    And the response body contains the traffic influence equal to the trafficInfluenceId previosly created
+    And the response body contains the traffic influence state
+    And the response body contains the status "Active"
 
