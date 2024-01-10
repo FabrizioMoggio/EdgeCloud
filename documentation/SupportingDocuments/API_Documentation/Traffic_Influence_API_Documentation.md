@@ -1,4 +1,3 @@
-
 # OPAG-CAMARA Traffic Influence API
 ## Overview
 
@@ -21,7 +20,7 @@ The TI API can be used to:
 The usage of the TI API is based on the management of a "TrafficInfluence" resource, an object containing the intent requested invoking the TI API and that is implemented by the platform configuring the Mobile Network for the optimal routing toward the EAS instance.
 The "TrafficInfluence" resource can be created (providing the related parameters that specify the desired intent), queried, modified and deleted.
 The TI API is asynchronous, a notification is available providing information about the status of the requested resource.  
-For an Application (identified by "applicationId") many "TrafficInfluence" resources can be created, e.g. to add multiple users, regions or zones.
+For an Application (identified by "appId") many "TrafficInfluence" resources can be created, e.g. to add multiple users, regions or zones.
 
 Before starting to use the TI API, the developer needs to know about the below specified details:
 
@@ -35,28 +34,28 @@ Configure security access keys such as OAuth 2.0 client credentials to be used b
 This object represents the resource that carries the requirements from the user to be implemented. The TI API is invoked for the life cycle management of this resource (CRUD). The resource contains the intents from the TI API Consumer. Managing this resource, the developer can specify in which geographical location the routing must be applied, toward which application, maybe for a specific set of users or for a limited period of time.
 
 **trafficInfluenceID**
-Identifier for the Traffic Influence resource. This parameter is returned by the TI API and must be used to update it (e.g., adding a Device or deleting it). A different Traffic Influence resource must be created for any Device or Zone or Region. All these resources are related to an Application identified by the applicationId.
+Identifier for the Traffic Influence resource. This parameter is returned by the TI API and must be used to update it (e.g., adding a Device or deleting it). A different Traffic Influence resource must be created for any Device or Zone or Region. All these resources are related to an Application identified by "appId".
 
 **apiConsumerId**
 Unique identifier for the TI API Consumer.
 
 **region**
-The developer can specify in which geographical area he requires the fastest routing toward the nearest application instance. A Region is a wide geographical area and it contains one or more Zones. A Zone is where the Telco Edge sites are located. Zones and Regions identifiers are defined and provided by the Telco Operator and can also be used or retrieved with other CAMARA APIs (“MEC Exposure & Experience Management API” and “Simple Edge Discovery”). To add more regions the TI API must be invoked (POST) for each region. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "applicationId").
+The developer can specify in which geographical area he requires the fastest routing toward the nearest application instance. A Region is a wide geographical area and it contains one or more Zones. A Zone is where the Telco Edge sites are located. Zones and Regions identifiers are defined and provided by the Telco Operator and can also be used or retrieved with other CAMARA APIs (“MEC Exposure & Experience Management API” and “Simple Edge Discovery”). To add more regions the TI API must be invoked (POST) for each region. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "appId").
 
 **zone**
-The developer can specify in which geographical area he requires the fastest routing toward the nearest Application instance. A Zone is a smaller geographical area inside a Region. A Zone is where the Telco Edge sites are located. To add more zones the TI API must be invoked (POST) for each zone. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "applicationId").
+The developer can specify in which geographical area he requires the fastest routing toward the nearest Application instance. A Zone is a smaller geographical area inside a Region. A Zone is where the Telco Edge sites are located. To add more zones the TI API must be invoked (POST) for each zone. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "appId").
 
-**applicationId**
-Unique Application identifier inside the Telco Operator Platform. This identifier is provided during the application onboarding process. To influence the traffic toward a specific Application. It is the Operator Platform that detects the appropriate Application instance in the selected Region or Zone.
+**appId**
+A globally unique identifier associated with the application. This identifier is provided during the application onboarding process. To influence the traffic toward a specific Application. It is the Operator Platform that detects the appropriate Application instance in the selected Region or Zone.
 
-**instanceId**
-Unique identifier generated by the Operator Platform to identify a specific instance of the Application on a specific zone. To influence a traffic toward a specific Application instance.
+**appInstanceId**
+A globally unique identifier generated by the Operator Platform to identify a specific instance of the Application on a specific zone. To influence a traffic toward a specific Application instance.
 
 **trafficFilters**
 The Application can expose different service on different interfaces, with this parameter it is possible to enable just some of those services maybe for different sets of users.
 
 **Device**
-A user Device can be provided as an input. To add more users the TI API must be invoked (POST) of each user Device. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "applicationId"). The routing toward the selected Application instance is only applied for provided user Devices.
+A user Device can be provided as an input. To add more users the TI API must be invoked (POST) of each user Device. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "appId"). The routing toward the selected Application instance is only applied for provided user Devices.
 
 **Notification URL and token**
 Developers have a chance to specify call back URL on which notifications (e.g. session termination) regarding the session can be received from the service provider. This is also an optional parameter.
@@ -69,15 +68,15 @@ In this method the TI API invoker client is registered as a confidential client 
 ## 4.1 Details
 
 The TI API is consumed by an Application Function (AF) requesting for the optimal routing, in term of latency, for the traffic flow from a Device toward EAS instances in Telco Edge sites.
-When the Application (the EAS) is onboarded and deployed in the Telco Edge site, the Application is identified with a unique identifier (applicationId).
-Using the application identifier ("applicationId") and specifying a Zone or a Region, the Telco Operator Platform, autonomously identifies the best instance of the EAS toward which routing the traffic flow and configures the Mobile Network accordingly to get the fastest routing.
+When the Application (the EAS) is onboarded and deployed in the Telco Edge site, the Application is identified with a unique identifier ("appId").
+Using the application identifier ("appId") and specifying a Zone or a Region, the Telco Operator Platform, autonomously identifies the best instance of the EAS toward which routing the traffic flow and configures the Mobile Network accordingly to get the fastest routing.
 If just the application identifier is used, the Telco Operator Platform identifies all the EAS Instances and activates the optimal routing on the Mobile Network.
 If the optimal routing in term of latency should be available just for a set of users, the TI API must be invoked for each user creating a new TrafficInfluce resource for each one.
 If the Application offers different services on different interfaces a traffic filter based on IP, Port and Protocol can be used. I this way it is also possible to redirect different users to different interfaces.
 Here are some possible intents:
 
-1) activate the optimal routing for any EAS instance: the TI API must be invoked with the applicationId. The Telco Operator Platform identifies all the EAS instances and activates the optimal routing on the Mobile Network.
-2) activate the optimal routing in a specific Region or Zone: the TI API must be invoked with the applicationId and the Zones and Regions identifiers.
+1) activate the optimal routing for any EAS instance: the TI API must be invoked with the "appId". The Telco Operator Platform identifies all the EAS instances and activates the optimal routing on the Mobile Network.
+2) activate the optimal routing in a specific Region or Zone: the TI API must be invoked with the "appId" and the Zones and Regions identifiers.
 3) activate the optimal routing for a user devices: the TI API can  be invoked with a user Device identifier (“Device”). For each user Device, a TI API invocation is required.
 
 ## Version: 0.9.2
@@ -100,7 +99,7 @@ Reads all of the active TrafficInfluence resources owned by the same API Consume
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| applicationId | query | Not required. Used to select traffic influence resources filtered by applicationId | No | string |
+| appId | query | Not required. Used to select traffic influence resources filtered by appId | No | string (uuid) |
 
 ##### Responses
 
@@ -120,7 +119,7 @@ Creates a new TrafficInfluence resource
 
 ##### Description
 
-Takes as input an object containing the intents from the API Consumer and creates a TrafficInfluence resource accordingly. The trafficInfluenceID parameter, that is part of the object, must not be valorized when creating a new resource. For this reason the trafficInfluenceID parameter must be avoided in the object, anyway it will be ignored by the API Producer. It is automatically generated by the system and returned in the response.
+Gets in input an object containing the intents from the API Consumer and creates a TrafficInfluence resourse accordingly. The trafficInfluenceID parameter, that is part of the object, must not be valorized when creating a new resource. For this reason the trafficInfluenceID parameter must be avoided in the object, anyway it will be ignored by the API Producer. It is automatically generated by the system and returned in the response.
 
 ##### Responses
 
@@ -218,8 +217,8 @@ Delete an existing TrafficInfluence resource
 | ---- | ---- | ----------- | -------- |
 | trafficInfluenceID | string | Identifier for the Traffic Influence resource. This parameter is returned by the API and must be used to update it (e.g., adding new users or deleting it). | No |
 | apiConsumerId | string | Unique Identifier of the TI API Consumer. | Yes |
-| applicationId | string | Unique ID representing the Edge Application<br>_Example:_ `"Virtual_Reality_Arena"` | Yes |
-| instanceId | string | Unique identifier generated by the partner OP to identify an instance of the application on a specific zone. | No |
+| AppId | string (uuid) | A globally unique identifier associated with the application. OP generates this identifier when the application is submitted over NBI.<br>_Example:_ `"6B29FC40-CA47-1067-B31D-00DD010662DA"` | No |
+| appInstanceId | string (uuid) | A globally unique identifier associated with a running instance of an application. OP generates this identifier. | No |
 | region | string | Unique identifier representing a region  | No |
 | zone | string | Unique identifier representing a zone  | No |
 | device | object | Device identifier | No |
@@ -234,7 +233,7 @@ Delete an existing TrafficInfluence resource
 | ---- | ---- | ----------- | -------- |
 | trafficInfluenceID |  |  | No |
 | apiConsumerId |  |  | No |
-| applicationId |  |  | No |
+| appId |  |  | No |
 | state |  |  | No |
 
 #### PostTrafficInfluence
@@ -330,13 +329,24 @@ IPv6 address, following IETF 5952 format, may be specified in form <address/mask
 **Example**
 <pre>2001:db8:85a3:8d3:1319:8a2e:370:7344</pre>
 
-#### InstanceIdentifier
+#### AppInstanceId
 
-Unique identifier generated by the partner OP to identify an instance of the application on a specific zone.
+A globally unique identifier associated with a running instance of an application. OP generates this identifier.
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
-| InstanceIdentifier | string | Unique identifier generated by the partner OP to identify an instance of the application on a specific zone. |  |
+| AppInstanceId | string | A globally unique identifier associated with a running instance of an application. OP generates this identifier. |  |
+
+#### AppId
+
+A globally unique identifier associated with the application. OP generates this identifier when the application is submitted over NBI.
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| AppId | string | A globally unique identifier associated with the application. OP generates this identifier when the application is submitted over NBI. |  |
+
+**Example**
+<pre>6B29FC40-CA47-1067-B31D-00DD010662DA</pre>
 
 #### ErrResponse
 
@@ -351,6 +361,7 @@ Unique identifier generated by the partner OP to identify an instance of the app
 | ---- | ---- | ----------- | -------- |
 | code | string | Code given to this error | Yes |
 | message | string | Detailed error description | Yes |
+
 ### 4.4 Policies
 
 N/A
@@ -385,6 +396,7 @@ Enhancements with respect to the previous release:
 - DELETE response code modified as 202. The Deletion request is accepted (not yet completed)
 - Added response code 400 (bad request) to POST
 - General improvement in documentation
+- applicationId changed into appId and instanceId changed into appInstanceId
 
 ##  References
 
