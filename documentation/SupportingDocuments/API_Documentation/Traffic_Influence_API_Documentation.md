@@ -217,7 +217,7 @@ Delete an existing TrafficInfluence resource
 | ---- | ---- | ----------- | -------- |
 | trafficInfluenceID | string | Identifier for the Traffic Influence resource. This parameter is returned by the API and must be used to update it (e.g., adding new users or deleting it). | No |
 | apiConsumerId | string | Unique Identifier of the TI API Consumer. | Yes |
-| AppId | string (uuid) | A globally unique identifier associated with the application. OP generates this identifier when the application is submitted over NBI.<br>_Example:_ `"6B29FC40-CA47-1067-B31D-00DD010662DA"` | No |
+| appId | string (uuid) | A globally unique identifier associated with the application. OP generates this identifier when the application is submitted over NBI.<br>_Example:_ `"6B29FC40-CA47-1067-B31D-00DD010662DA"` | No |
 | appInstanceId | string (uuid) | A globally unique identifier associated with a running instance of an application. OP generates this identifier. | No |
 | region | string | Unique identifier representing a region  | No |
 | zone | string | Unique identifier representing a zone  | No |
