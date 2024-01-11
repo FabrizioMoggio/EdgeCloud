@@ -354,7 +354,7 @@ components:
         apiConsumerId:
             type: string
             description: Unique Identifier of the TI API Consumer.
-        AppId:
+        appId:
             $ref: '#/components/schemas/AppId'
         appInstanceId:
             $ref: '#/components/schemas/AppInstanceId'
