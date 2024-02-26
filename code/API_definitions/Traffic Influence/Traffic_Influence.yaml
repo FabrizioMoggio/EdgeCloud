@@ -8,8 +8,9 @@ info:
   description: |
     ## Overview
     
-    The reference scenario foresees a Service, composed by one or more Service Producers deployed in different geographical locations on Telco Edge sites (Edge datacentres of Telco Operator) or in Cloud. The Service Producer, deployed at the Edge, is referred as Edge Application Server (EAS).
-    The Traffic Influence API (TI API) provides the fastest routing from the user Device (e.g. a Smartphone) to the optimal EAS instance in a specific geographical location, installed in a Telco Edge site.
+    The reference scenario foresees a Service, composed by one or more Service Producers deployed in different geographical locations on Edge Cloud Zones (Edge datacentres of Telco Operator) or in Cloud. The Service Producer, deployed at the Edge, is referred as Edge Application Server (EAS).
+    An Edge Cloud Zone is a platform in the Telco Operator network, offering network, compute and storage resources to developers. A developer can deploy and run applications on an Edge Cloud Zone, meaning reduced latency to end users that are nearby, as the network path is shorter. A network operator's EdgeCloud may comprise multiple Edge Cloud Zones, each in a discrete location to bring latency benefits to end users across a country . The operator can help developers know which of the Edge Cloud Zones will bring the best performance benefit for a given end user and application
+    The Traffic Influence API (TI API) provides the fastest routing from the user Device (e.g. a Smartphone) to the optimal EAS instance in a specific geographical location, installed in an Edge Cloud Zone.
     If a Service is offered by Cloud Instances and by Edge Instances, the TI API can be used get the optimal routing of the traffic to the Edge Instances, maybe for a set of users. Getting the optimal routing can be used to improve latency maybe in combination with other CAMARA APIs such as QoD (Quality On Demand). Providing the optimal routing is indeed an important step to get the optimal latency.
     If the TI API is used to get the best routing at the Edge for a Device in a geographical location and the Device moves to another geographical location, the TI API can be invoked to get the optimal routing in the new geographical location for that Device.
     
@@ -47,13 +48,13 @@ info:
     Unique identifier for the TI API Consumer.
     
     **region**
-    The developer can specify in which geographical area he requires the fastest routing toward the nearest application instance. A Region is a wide geographical area and it contains one or more Zones. A Zone is where the Telco Edge sites are located. Zones and Regions identifiers are defined and provided by the Telco Operator and can also be used or retrieved with other CAMARA APIs (“MEC Exposure & Experience Management API” and “Simple Edge Discovery”). To add more regions the TI API must be invoked (POST) for each region. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "appId").
+    The developer can specify in which geographical area he requires the fastest routing toward the nearest application instance. A "region" is a wide geographical area and it contains one or more "zones". A "zone" is where the Edge Cloud Zone is located. Zones and Regions identifiers are defined and provided by the Telco Operator and can also be used or retrieved with other CAMARA APIs (“MEC Exposure & Experience Management API” and “Simple Edge Discovery”). To add more regions the TI API must be invoked (POST) for each region. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "appId").
     
     **zone**
-    The developer can specify in which geographical area he requires the fastest routing toward the nearest Application instance. A Zone is a smaller geographical area inside a Region. A Zone is where the Telco Edge sites are located. To add more zones the TI API must be invoked (POST) for each zone. New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "appId").
+    The developer can specify in which geographical area he requires the fastest routing toward the nearest Application instance. A "zone" is a smaller geographical area inside a "region". A "zone" is where the Edge Cloud Zone is located. To add more zones the TI API must be invoked (POST) for each "zone". New "TrafficInfluence" resources are created (with different "trafficInfluenceID"). All the created resources are aggregated by the Application (identified by "appId").
     
     **appId**
-    A globally unique identifier associated with the application. This identifier is provided during the application onboarding process. To influence the traffic toward a specific Application. It is the Operator Platform that detects the appropriate Application instance in the selected Region or Zone.
+    A globally unique identifier associated with the application. This identifier is provided during the application onboarding process. To influence the traffic toward a specific Application. It is the Operator Platform that detects the appropriate Application instance in the selected "region" or "zone".
     
     **appInstanceId**
     A globally unique identifier generated by the Operator Platform to identify a specific instance of the Application on a specific zone. To influence a traffic toward a specific Application instance.
@@ -74,8 +75,8 @@ info:
     ## 4. API Documentation
     ## 4.1 Details
     
-    The TI API is consumed by an Application Function (AF) requesting for the optimal routing, in term of latency, for the traffic flow from a Device toward EAS instances in Telco Edge sites.
-    When the Application (the EAS) is onboarded and deployed in the Telco Edge site, the Application is identified with a unique identifier ("appId"). 
+    The TI API is consumed by an Application Function (AF) requesting for the optimal routing, in term of latency, for the traffic flow from a Device toward EAS instances in Edge Cloud Zones.
+    When the Application (the EAS) is onboarded and deployed in the Edge Cloud Zones, the Application is identified with a unique identifier ("appId"). 
     Using the application identifier ("appId") and specifying a Zone or a Region, the Telco Operator Platform, autonomously identifies the best instance of the EAS toward which routing the traffic flow and configures the Mobile Network accordingly to get the fastest routing.
     If just the application identifier is used, the Telco Operator Platform identifies all the EAS Instances and activates the optimal routing on the Mobile Network.
     If the optimal routing in term of latency should be available just for a set of users, the TI API must be invoked for each user creating a new TrafficInfluce resource for each one.
@@ -88,6 +89,8 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
+  contact:
+    email: project-email@sample.com
 
 externalDocs:
   description: Product documentation at Camara
@@ -114,9 +117,18 @@ servers:
       basePath:
         default: ti/v0
         description: Base path for the Traffic Influence API
+        
+############################################################################
+#                                     Tags                                #
+############################################################################
+tags:
+  - name: Traffic Influence API read
+    description: Reads existing TrafficInfluence resources
+  - name: Traffic Influence API write
+    description: Creates of modifies a TrafficInfluence resource
 
-
-
+    
+    
 ############################################################################
 #                                     Paths                                #
 ############################################################################
@@ -128,12 +140,12 @@ paths:
           name: appId
           schema:
             $ref: "#/components/schemas/AppId"
-          description: Not required. Used to select traffic influence resources filtered by appId
+          description: Used to select traffic influence resources filtered by appId
       tags:
-        - Traffic Influence API GET Operation
+        - Traffic Influence API read
       summary: Retries existing TrafficInfluence Resources
       description: Reads all of the active TrafficInfluence resources owned by the same API Consumer authenticated via oAuth2
-      operationId: GetTrafficInfluences
+      operationId: getTrafficInfluence
       responses:
         '200':
           description: Returns the information about existing TrafficInfluence resources. 
@@ -156,10 +168,10 @@ paths:
           
     post:
       tags:
-        - Traffic Influence API POST Operation
+        - Traffic Influence API write
       summary: Creates a new TrafficInfluence resource
       description: Takes as input an object containing the intents from the API Consumer and creates a TrafficInfluence resourse accordingly. The trafficInfluenceID parameter, that is part of the object, must not be valorized when creating a new resource. For this reason the trafficInfluenceID parameter must be avoided in the object, anyway it will be ignored by the API Producer. It is automatically generated by the system and returned in the response.
-      operationId: PostTrafficInfluence
+      operationId: postTrafficInfluence
       requestBody:
         description: Describes the request body
         required: true
@@ -206,9 +218,11 @@ paths:
           type: string
    
     get:
-      summary: read a specific TrafficInfluence resource identified by the trafficInfluenceID value
       tags:
-        - Traffic Influence API GET Operation
+        - Traffic Influence API read
+      summary: Reads a specific TrafficInfluence resource identified by the trafficInfluenceID value
+      description: Returns a specific TrafficInfluence resources owned by the same API Consumer authenticated via oAuth2
+      operationId: getAllTrafficInfluences
       responses:
         '200':
           description: OK. 
@@ -230,10 +244,10 @@ paths:
           $ref: "#/components/responses/Generic503"
     patch:
       tags:
-        - TrafficInfluence API PATCH Operation
+        - Traffic Influence API write
       summary: updates a specific TrafficInfluence resource, identified by the trafficInfluenceID value
       description: The resource identified by the trafficInfluenceID value can be modified
-      operationId: PatchTrafficInfluence
+      operationId: patchTrafficInfluence
       requestBody:
         description: Describes the request body
         required: true
@@ -272,9 +286,11 @@ paths:
         onTrafficInfluenceChanged:
           $ref: "#/components/callbacks/onTrafficInfluenceChanged"
     delete:
-      summary: Delete an existing TrafficInfluence resource
       tags:
-        - TrafficInfluence API Delete Operation
+        - Traffic Influence API write
+      summary: Delete an existing TrafficInfluence resource
+      description: invoked by the API Consumer to stop influencing the traffic, deleting a TrafficInfluence resource previously created
+      operationId: deleteTrafficInfluence      
       parameters:
         - name: callbackUrl
           in: query
@@ -324,6 +340,11 @@ components:
           # when making the subscription PLUS the suffix `/event`
           '{$request.body.notificationUri}/event':
             post:
+              tags:
+                - Traffic Influence CALLBACK Operation
+              summary: Provides a notifican channel for changes in the TrafficInfluence resource
+              description: Creating, modifying or delating a Traffic Influece resourece is an asycronous task. For this reason a notification channel via callback to a specified URL is provided.
+              operationId: postTrafficInfluence            
               requestBody:
                 description: subscription payload which contains the updated traffic influence instance
                 content:
@@ -346,6 +367,7 @@ components:
   schemas:
 
     TrafficInfluence:
+      description: Resource conteining the informations to influence the traffic from the device to the EAS
       type: object
       properties:
         trafficInfluenceID:
@@ -396,6 +418,7 @@ components:
         - appId
         
     PatchTrafficInfluence:
+      description: inherits from TrafficInfluence and restricts the access to certain parameters. Only some paramter can be indeed modified with the PATCH operation.
       allOf:
         - $ref: "#/components/schemas/TrafficInfluence"
       properties:
@@ -419,6 +442,7 @@ components:
     
     TrafficInfluenceNotification:
       type: object
+      description: Notifican channel for changes in the TrafficInfluence resource
       required:
         - trafficInfluenceChanged
       properties:
@@ -458,6 +482,7 @@ components:
     NetworkAccessIdentifier:
       type: string
       example: "123456789@domain.com"
+      description: identifier for the End User formatted as string, it cab be the user's email address
    
     PhoneNumber:
       type: string
@@ -468,29 +493,15 @@ components:
     Ipv4Address:
       type: string
       format: ipv4
-      pattern: '^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$'
-      example: "192.168.0.1/24"
-      description: |
-        IPv4 address may be specified in form <address/mask> as:
-          - address - an IPv4 number in dotted-quad form 1.2.3.4. Only this exact IP number will match the flow control rule.
-          - address/mask - an IP number as above with a mask width of the form 1.2.3.4/24.
-            In this case, all IP numbers from 1.2.3.0 to 1.2.3.255 will match. The bit width MUST be valid for the IP version.
+      example: "192.168.0.1"
+      description: IP of the device. A single IPv4 address may be specified in dotted-quad form 1.2.3.4. Only this exact IP number will match the flow control rule.
+
    
     Ipv6Address:
       type: string
       format: ipv6
-      allOf:
-        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))?$'
-        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)?$'
       example: "2001:db8:85a3:8d3:1319:8a2e:370:7344"
-      description: |
-        IPv6 address, following IETF 5952 format, may be specified in form <address/mask> as:
-          - address - The /128 subnet is optional for single addresses:
-            - 2001:db8:85a3:8d3:1319:8a2e:370:7344
-            - 2001:db8:85a3:8d3:1319:8a2e:370:7344/128
-          - address/mask - an IP v6 number with a mask:
-            - 2001:db8:85a3:8d3::0/64
-            - 2001:db8:85a3:8d3::/64
+      description: IP of the device. A single IPv6 address, following IETF 5952 format, may be specified like 2001:db8:85a3:8d3:1319:8a2e:370:7344
    
     AppInstanceId:
       type: string
@@ -508,15 +519,19 @@ components:
  #  RESPONSES
  #######################################################            
     ErrResponse:
+      description: Responce feedback in case of errors
       type: object
       properties:
         status:
+          description: status for the error
           type: string
           example: OK
         message:
+          description: additional message for the error
           type: string
           example: OK
     ErrorInfo:
+      description: Information in case of errors    
       type: object
       required:
         - code
@@ -590,15 +605,6 @@ components:
           example:
             code: FORBIDDEN
             message: "Operation not allowed: ..."
-    SessionNotFound404:
-      description: Session not found
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          example:
-            code: NOT_FOUND
-            message: "Session Id does not exist"
     Generic503:
       description: Service unavailable
       content:
