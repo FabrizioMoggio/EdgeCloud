@@ -34,10 +34,7 @@ info:
    
     **Base-Url**
     The RESTful TI API endpoint, for example [**https://tim-api.developer.tim.it/trafficinfluence**](https://tim-api.developer.tim.it/trafficinfluence)
-   
-    **Authentication**
-    Configure security access keys such as OAuth 2.0 client credentials to be used by Client applications which will invoke the TI API.
-   
+
     **TrafficInfluence**
     This object represents the resource that carries the requirements from the user to be implemented. The TI API is invoked for the life cycle management of this resource (CRUD). The resource contains the intents from the TI API Consumer. Managing this resource, the developer can specify in which geographical location the routing must be applied, toward which application, maybe for a specific set of users or for a limited period of time.
    
@@ -69,8 +66,9 @@ info:
     Developers have a chance to specify call back URL on which notifications (e.g. session termination) regarding the session can be received from the service provider. This is also an optional parameter.
           
     ## 3. Authentication and Authorization
-    The TI API makes use of the client credentials grant which is applicable for server to server use cases involving trusted partners or clients without any protected user data involved.
-    In this method the TI API invoker client is registered as a confidential client with an authorization grant type of client\_credentials [2].
+    CAMARA guidelines defines a set of authorization flows which can grant API clients access to the API functionality, as outlined in the document [CAMARA-API-access-and-user-consent.md](https://github.com/camaraproject/IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access-and-user-consent.md). Which specific authorization flows are to be used will be determined during onboarding process, happening between the API Client and the Telco Operator exposing the API, taking into account the declared purpose for accessing the API, while also being subject to the prevailing legal framework dictated by local legislation.
+
+    It is important to remark that in cases where personal user data is processed by the API, and users can exercise their rights through mechanisms such as opt-in and/or opt-out, the use of 3-legged access tokens becomes mandatory. This measure ensures that the API remains in strict compliance with user privacy preferences and regulatory obligations, upholding the principles of transparency and user-centric data control.
     
     ## 4. API Documentation
     ## 4.1 Details
