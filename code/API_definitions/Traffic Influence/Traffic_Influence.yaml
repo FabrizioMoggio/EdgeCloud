@@ -517,7 +517,7 @@ components:
            channel via callback to a specified URL is provided.
           operationId: postTrafficInfluence
           parameters:
-            - $ref: '#/components/parameters/x-correlator'      
+            - $ref: '#/components/parameters/x-correlator'
           requestBody:
             description: subscription payload which contains the updated
              traffic influence instance
@@ -526,22 +526,18 @@ components:
                 schema:
                   $ref: '#/components/schemas/TrafficInfluenceNotification'
           responses:
-              '202':
-                description: |
-                  Your server implementation should return this HTTP
-                  status code
-                  if the data was received successfully
-                headers:
-                  x-correlator:
-                    $ref: '#/components/headers/x-correlator'
-              '204':
-                description: |
-                  Your server should return this HTTP status code if no
-                  longer interested
-                  in further updates
-                headers:
-                  x-correlator:
-                    $ref: '#/components/headers/x-correlator'
+            '202':
+              description: Your server implementation should return this HTTP
+                status code if the data was received successfully
+              headers:
+                x-correlator:
+                  $ref: '#/components/headers/x-correlator'
+            '204':
+              description: Your server should return this HTTP status code if
+               no longer interested in further updates
+              headers:
+                x-correlator:
+                  $ref: '#/components/headers/x-correlator'
 #######################################################
 #  RESOURCES
 #######################################################
@@ -557,16 +553,16 @@ components:
            parameter is returned by the API and must be used to update it
            (e.g., adding new users or deleting it).
         apiConsumerId:
-            type: string
-            description: Unique Identifier of the TI API Consumer.
+          type: string
+          description: Unique Identifier of the TI API Consumer.
         appId:
-            $ref: '#/components/schemas/AppId'
+          $ref: '#/components/schemas/AppId'
         appInstanceId:
-            $ref: '#/components/schemas/AppInstanceId'
+          $ref: '#/components/schemas/AppInstanceId'
         region:
-            $ref: '#/components/schemas/TypesRegionId'
+          $ref: '#/components/schemas/TypesRegionId'
         zone:
-            $ref: '#/components/schemas/TypesZoneId'
+          $ref: '#/components/schemas/TypesZoneId'
         device:
           $ref: '#/components/schemas/Device'
         state:
@@ -610,13 +606,13 @@ components:
           description: Identifies IP packet filters. To be used when a the
            Application needs a traffic flow towards a specific EAS interface
         notificationUri:
-            type: string
-            description: Defines the callback uri which should be notified in
-             asynchronous way when the state for the requested resources changes
-             (i.e. ordered to activated)
+          type: string
+          description: Defines the callback uri which should be notified in
+           asynchronous way when the state for the requested resources changes
+           (i.e. ordered to activated)
         notificationAuthToken:
-            type: string
-            description: Authentification token for callback API
+          type: string
+          description: Authentification token for callback API
       required:
         - apiConsumerId
         - appId
@@ -656,8 +652,7 @@ components:
 #  TYPES
 #######################################################
     TypesZoneId:
-      description: |
-        Unique identifier representing a zone
+      description: Unique identifier representing a zone
       type: string
       additionalProperties: false
     TypesRegionId:
