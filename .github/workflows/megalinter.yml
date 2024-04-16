@@ -9,7 +9,7 @@ name: MegaLinter
 on: # yamllint disable-line rule:truthy
   # Pull Requests to main
   pull_request:
-    branches: [master, main]
+    branches: Test-ML
 
 env: # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
