@@ -360,7 +360,7 @@ paths:
        same API Consumer.
       operationId: getAllTrafficInfluences
       parameters:
-        - $ref: '#/components/parameters/x-correlator'  
+        - $ref: '#/components/parameters/x-correlator'
       security:
         - openId:
           - ti:traffic-influences:read
@@ -369,7 +369,7 @@ paths:
           description: OK.
           headers:
             x-correlator:
-             $ref: '#/components/headers/x-correlator' 
+             $ref: '#/components/headers/x-correlator'
           content:
             application/json:
               schema:
@@ -421,7 +421,7 @@ paths:
                 type: string
                 description: Link to the created traffic influence resource
             x-correlator:
-             $ref: '#/components/headers/x-correlator'           
+             $ref: '#/components/headers/x-correlator'    
         "400":
           $ref: "#/components/responses/Generic400"
         '404':
@@ -517,7 +517,7 @@ components:
                channel via callback to a specified URL is provided.
               operationId: postTrafficInfluence
               parameters:
-                - $ref: '#/components/parameters/x-correlator'                
+                - $ref: '#/components/parameters/x-correlator'      
               requestBody:
                 description: subscription payload which contains the updated
                  traffic influence instance
@@ -528,12 +528,12 @@ components:
               responses:
                   '202':
                     description: |
-                      Your server implementation should return this HTTP 
+                      Your server implementation should return this HTTP
                       status code
                       if the data was received successfully
                     headers:
                       x-correlator:
-                        $ref: '#/components/headers/x-correlator'                      
+                        $ref: '#/components/headers/x-correlator'
                   '204':
                     description: |
                       Your server should return this HTTP status code if no
@@ -654,17 +654,17 @@ components:
           $ref: "#/components/schemas/TrafficInfluence"
 #######################################################
 #  TYPES
-#######################################################    
+#######################################################
     TypesZoneId:
       description: |
         Unique identifier representing a zone
       type: string
-      additionalProperties: false  
+      additionalProperties: false
     TypesRegionId:
       description: |
         Unique identifier representing a region
       type: string
-      additionalProperties: false   
+      additionalProperties: false
     Device:
       type: object
       minProperties: 1
@@ -713,8 +713,8 @@ components:
       example: "6B29FC40-CA47-1067-B31D-00DD010662DA"
       description:  A globally unique identifier associated with the
        application. OP generates this identifier when the application is
-       submitted over NBI. 
-######################################################
+       submitted over NBI.
+#######################################################
 #  RESPONSES
 #######################################################            
     ErrResponse:
@@ -730,7 +730,7 @@ components:
           type: string
           example: OK
     ErrorInfo:
-      description: Information in case of error  
+      description: Information in case of error
       type: object
       required:
         - code
@@ -747,7 +747,7 @@ components:
       description: The specified resource was not found
       headers:
         x-correlator:
-          $ref: '#/components/headers/x-correlator'      
+          $ref: '#/components/headers/x-correlator'    
       content:
         application/json:
           schema:
@@ -759,7 +759,7 @@ components:
       description: An unknow error has occurred
       headers:
         x-correlator:
-          $ref: '#/components/headers/x-correlator'      
+          $ref: '#/components/headers/x-correlator'
       content:
         application/json:
           schema:
@@ -771,7 +771,7 @@ components:
       description: Connection timeout towards backend service has occurred
       headers:
         x-correlator:
-          $ref: '#/components/headers/x-correlator'      
+          $ref: '#/components/headers/x-correlator'
       content:
         application/json:
           schema:
@@ -783,11 +783,11 @@ components:
       description: The resource delation request has been accepted
       headers:
         x-correlator:
-          $ref: '#/components/headers/x-correlator'      
+          $ref: '#/components/headers/x-correlator'
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrResponse'        
+            $ref: '#/components/schemas/ErrResponse'  
           example:
             status: OK
             message: Accepted
