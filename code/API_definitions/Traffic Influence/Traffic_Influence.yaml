@@ -247,7 +247,7 @@ paths:
     get:
       security:
         - openId:
-          - traffic-influences:read
+          - ti:traffic-influences:read
       parameters:
         - $ref: '#/components/parameters/x-correlator'      
         - in: query
@@ -306,7 +306,7 @@ paths:
         - $ref: '#/components/parameters/x-correlator'      
       security:
         - openId:
-          - traffic-influences:write
+          - ti:traffic-influences:write
       requestBody:
         description: Describes the request body
         required: true
@@ -369,7 +369,7 @@ paths:
         - $ref: '#/components/parameters/x-correlator'        
       security:
         - openId:
-          - traffic-influences:read
+          - ti:traffic-influences:read
       responses:
         '200':
           description: OK. 
@@ -404,7 +404,7 @@ paths:
         - $ref: '#/components/parameters/x-correlator'          
       security:
         - openId:
-          - traffic-influences:write
+          - ti:traffic-influences:write
       requestBody:
         description: Describes the request body
         required: true
@@ -454,7 +454,7 @@ paths:
       operationId: deleteTrafficInfluence      
       security:
         - openId:
-          - traffic-influences:write
+          - ti:traffic-influences:write
       parameters:
         - $ref: '#/components/parameters/x-correlator'        
         - name: callbackUrl
