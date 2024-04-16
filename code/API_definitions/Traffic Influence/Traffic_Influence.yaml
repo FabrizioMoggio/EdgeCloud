@@ -648,7 +648,7 @@ components:
       properties:
         trafficInfluenceChanged:
           $ref: "#/components/schemas/TrafficInfluence"
-############################################################################          
+############################################################################
 #                                     Types                                #
 ############################################################################
     TypesZoneId:
@@ -709,7 +709,7 @@ components:
       description:  A globally unique identifier associated with the
        application. OP generates this identifier when the application is
        submitted over NBI.
-############################################################################       
+############################################################################
 #                                     Responses                            #
 ############################################################################
     ErrResponse:
