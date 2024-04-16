@@ -139,7 +139,7 @@ info:
     A globally unique identifier associated with the application. This
     identifier is provided during the application onboarding process.
     To influence the traffic toward a specific Application. It is the Operator
-    Platform that detects the appropriate Application instance in the selected 
+    Platform that detects the appropriate Application instance in the selected
     "region" or "zone".\
     \
     **appInstanceId**
@@ -169,7 +169,7 @@ info:
     clients access to the API functionality, as outlined in the document
     [CAMARA-API-access-and-user-consent.md](https://github.com/camaraproject\
     /IdentityAndConsentManagement/blob/main/documentation/CAMARA-API-access\
-    -and-user-consent.md). 
+    -and-user-consent.md).
     Which specific authorization flows are to be used will be determined during
     onboarding process, happening between the API Client and the Telco Operator
     exposing the API, taking into account the declared purpose for accessing the
@@ -259,16 +259,12 @@ paths:
       tags:
         - Traffic Influence API read
       summary: Retries existing TrafficInfluence Resources
-      description: 
-       >
-       Reads all of the active TrafficInfluence resources owned by
+      description: Reads all of the active TrafficInfluence resources owned by
        the same API Consumer
       operationId: getTrafficInfluence
       responses:
         '200':
-          description: 
-           >
-           Returns the information about existing TrafficInfluence
+          description: Returns the information about existing TrafficInfluence
            resources. 
           headers:
             x-correlator:
@@ -289,7 +285,6 @@ paths:
           $ref: "#/components/responses/Generic503"
         '504':
           $ref: "#/components/responses/BackendConnTimeout"
-          
     post:
       tags:
         - Traffic Influence API write
