@@ -249,7 +249,7 @@ paths:
         - openId:
           - ti:traffic-influences:read
       parameters:
-        - $ref: '#/components/parameters/x-correlator'      
+        - $ref: '#/components/parameters/x-correlator'
         - in: query
           name: appId
           schema:
@@ -265,10 +265,10 @@ paths:
       responses:
         '200':
           description: Returns the information about existing TrafficInfluence
-           resources. 
+           resources.
           headers:
             x-correlator:
-              $ref: '#/components/headers/x-correlator'          
+              $ref: '#/components/headers/x-correlator'
           content:
             application/json:
               schema:
@@ -298,7 +298,7 @@ paths:
         the system and returned in the response.
       operationId: postTrafficInfluence
       parameters:
-        - $ref: '#/components/parameters/x-correlator'      
+        - $ref: '#/components/parameters/x-correlator'
       security:
         - openId:
           - ti:traffic-influences:write
@@ -313,7 +313,7 @@ paths:
         '201':
           description: TrafficInfluence resource created, the related object is
            returned with the resource ID (trafficInfluenceID) and status (state)
-           valorised. 
+           valorised.
           headers:
             x-correlator:
               $ref: '#/components/headers/x-correlator'
@@ -327,7 +327,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/TrafficInfluence'
         "400":
-          $ref: "#/components/responses/Generic400"   
+          $ref: "#/components/responses/Generic400"
         '500':
           $ref: '#/components/responses/GenericError'
         '504':
@@ -351,7 +351,6 @@ paths:
         required: true
         schema:
           type: string
-   
     get:
       tags:
         - Traffic Influence API read
@@ -361,16 +360,16 @@ paths:
        same API Consumer.
       operationId: getAllTrafficInfluences
       parameters:
-        - $ref: '#/components/parameters/x-correlator'        
+        - $ref: '#/components/parameters/x-correlator'  
       security:
         - openId:
           - ti:traffic-influences:read
       responses:
         '200':
-          description: OK. 
+          description: OK.
           headers:
             x-correlator:
-             $ref: '#/components/headers/x-correlator'        
+             $ref: '#/components/headers/x-correlator' 
           content:
             application/json:
               schema:
@@ -396,7 +395,7 @@ paths:
        be modified.
       operationId: patchTrafficInfluence
       parameters:
-        - $ref: '#/components/parameters/x-correlator'          
+        - $ref: '#/components/parameters/x-correlator'
       security:
         - openId:
           - ti:traffic-influences:write
@@ -410,7 +409,7 @@ paths:
       responses:
         '200':
           description: TrafficInfluence resource edited, the related object is
-           returned, the status (state) is updated. 
+           returned, the status (state) is updated.
           content:
             application/json:
               schema:
@@ -422,9 +421,9 @@ paths:
                 type: string
                 description: Link to the created traffic influence resource
             x-correlator:
-             $ref: '#/components/headers/x-correlator'                 
+             $ref: '#/components/headers/x-correlator'           
         "400":
-          $ref: "#/components/responses/Generic400"   
+          $ref: "#/components/responses/Generic400"
         '404':
           $ref: '#/components/responses/ResNotFound'
         '500':
@@ -446,12 +445,12 @@ paths:
       summary: Delete an existing TrafficInfluence resource
       description: invoked by the API Consumer to stop influencing the traffic,
        deleting a TrafficInfluence resource previously created.
-      operationId: deleteTrafficInfluence      
+      operationId: deleteTrafficInfluence
       security:
         - openId:
           - ti:traffic-influences:write
       parameters:
-        - $ref: '#/components/parameters/x-correlator'        
+        - $ref: '#/components/parameters/x-correlator'
         - name: callbackUrl
           in: query
           required: false
@@ -495,7 +494,6 @@ components:
       description: Correlation id for the different services.
       schema:
         type: string
-        
   headers:
     x-correlator:
       description: Correlation id for the different services.
@@ -807,7 +805,6 @@ components:
             code: INVALID_ARGUMENT
             message: Client specified an invalid argument, request body or query
              param
-
     Generic401:
       description: Authentication problem with the client request
       headers:
