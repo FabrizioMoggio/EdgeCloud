@@ -706,7 +706,7 @@ components:
       type: string
       format: uuid
       example: "6B29FC40-CA47-1067-B31D-00DD010662DA"
-      description: A globally unique identifier associated with theapplication. 
+      description: A globally unique identifier associated with theapplication.
        OP generates this identifier when the application is submitted over NBI.
     ########################################################################
     #                                     Responses                        #
