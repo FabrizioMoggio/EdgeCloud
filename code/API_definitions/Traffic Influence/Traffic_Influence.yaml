@@ -369,7 +369,7 @@ paths:
           description: OK.
           headers:
             x-correlator:
-             $ref: '#/components/headers/x-correlator'
+              $ref: '#/components/headers/x-correlator'
           content:
             application/json:
               schema:
@@ -421,7 +421,7 @@ paths:
                 type: string
                 description: Link to the created traffic influence resource
             x-correlator:
-             $ref: '#/components/headers/x-correlator'    
+              $ref: '#/components/headers/x-correlator'
         "400":
           $ref: "#/components/responses/Generic400"
         '404':
@@ -504,44 +504,44 @@ components:
 #######################################################
   callbacks:
     onTrafficInfluenceChanged:
-          # when data is sent, it will be sent to the `callbackUrl` provided
-          # when making the subscription PLUS the suffix `/event`
-          '{$request.body.notificationUri}/event':
-            post:
-              tags:
-                - Traffic Influence CALLBACK Operation
-              summary: Provides a notifican channel for changes in the
-               TrafficInfluence resource
-              description: Creating, modifying or delating a Traffic Influece
-               resourece is an asycronous task. For this reason a notification
-               channel via callback to a specified URL is provided.
-              operationId: postTrafficInfluence
-              parameters:
-                - $ref: '#/components/parameters/x-correlator'      
-              requestBody:
-                description: subscription payload which contains the updated
-                 traffic influence instance
-                content:
-                  application/json:
-                    schema:
-                      $ref: '#/components/schemas/TrafficInfluenceNotification'
-              responses:
-                  '202':
-                    description: |
-                      Your server implementation should return this HTTP
-                      status code
-                      if the data was received successfully
-                    headers:
-                      x-correlator:
-                        $ref: '#/components/headers/x-correlator'
-                  '204':
-                    description: |
-                      Your server should return this HTTP status code if no
-                      longer interested
-                      in further updates
-                    headers:
-                      x-correlator:
-                        $ref: '#/components/headers/x-correlator'
+      # when data is sent, it will be sent to the `callbackUrl` provided
+      # when making the subscription PLUS the suffix `/event`
+      '{$request.body.notificationUri}/event':
+        post:
+          tags:
+            - Traffic Influence CALLBACK Operation
+          summary: Provides a notifican channel for changes in the
+           TrafficInfluence resource
+          description: Creating, modifying or delating a Traffic Influece
+           resourece is an asycronous task. For this reason a notification
+           channel via callback to a specified URL is provided.
+          operationId: postTrafficInfluence
+          parameters:
+            - $ref: '#/components/parameters/x-correlator'      
+          requestBody:
+            description: subscription payload which contains the updated
+             traffic influence instance
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/TrafficInfluenceNotification'
+          responses:
+              '202':
+                description: |
+                  Your server implementation should return this HTTP
+                  status code
+                  if the data was received successfully
+                headers:
+                  x-correlator:
+                    $ref: '#/components/headers/x-correlator'
+              '204':
+                description: |
+                  Your server should return this HTTP status code if no
+                  longer interested
+                  in further updates
+                headers:
+                  x-correlator:
+                    $ref: '#/components/headers/x-correlator'
 #######################################################
 #  RESOURCES
 #######################################################
@@ -716,7 +716,7 @@ components:
        submitted over NBI.
 #######################################################
 #  RESPONSES
-#######################################################            
+#######################################################
     ErrResponse:
       description: Responce feedback in case of errors
       type: object
@@ -747,7 +747,7 @@ components:
       description: The specified resource was not found
       headers:
         x-correlator:
-          $ref: '#/components/headers/x-correlator'    
+          $ref: '#/components/headers/x-correlator'
       content:
         application/json:
           schema:
@@ -787,7 +787,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrResponse'  
+            $ref: '#/components/schemas/ErrResponse'
           example:
             status: OK
             message: Accepted
