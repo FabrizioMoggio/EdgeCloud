@@ -499,9 +499,9 @@ components:
       description: Correlation id for the different services.
       schema:
         type: string
-############################################################################
-#                                   Events/Callbacks                       #
-############################################################################
+   #########################################################################
+   #                             Events/Callbacks                          #
+   #########################################################################
   callbacks:
     onTrafficInfluenceChanged:
       # when data is sent, it will be sent to the `callbackUrl` provided
@@ -538,9 +538,9 @@ components:
               headers:
                 x-correlator:
                   $ref: '#/components/headers/x-correlator'
-############################################################################
-#                                    Resources                             #
-############################################################################
+  ##########################################################################
+  #                                    Resources                           #
+  ##########################################################################
   schemas:
     TrafficInfluence:
       description: Resource conteining the informations to influence the
@@ -648,9 +648,9 @@ components:
       properties:
         trafficInfluenceChanged:
           $ref: "#/components/schemas/TrafficInfluence"
-############################################################################
-#                                     Types                                #
-############################################################################
+    ########################################################################
+    #                                     Types                            #
+    ########################################################################
     TypesZoneId:
       description: Unique identifier representing a zone
       type: string
@@ -709,9 +709,9 @@ components:
       description:  A globally unique identifier associated with the
        application. OP generates this identifier when the application is
        submitted over NBI.
-############################################################################
-#                                     Responses                            #
-############################################################################
+    ########################################################################
+    #                                     Responses                        #
+    ########################################################################
     ErrResponse:
       description: Responce feedback in case of errors
       type: object
