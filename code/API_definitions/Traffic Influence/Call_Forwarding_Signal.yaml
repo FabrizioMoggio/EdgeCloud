@@ -96,7 +96,7 @@ paths:
         - Call Forwarding information retrieval
       security:
         - openId:
-          - call-forwarding-signal:call-forwardings
+         - call-forwarding-signal:call-forwardings:read
       description: Retrieve the information about call forwarding service active
        on a phone number
       operationId: retrieveCallForwarding
@@ -172,17 +172,17 @@ components:
     #                                 Types                                    #
     ############################################################################
     PhoneNumber:
-     description: A public identifier addressing a telephone subscription. 
-      In mobile networks it corresponds to the MSISDN (Mobile Station 
+     description: A public identifier addressing a telephone subscription.
+      In mobile networks it corresponds to the MSISDN (Mobile Station
       International Subscriber Directory Number). In order to be globally unique
-      it has to be formatted in international format, according to E.164 
+      it has to be formatted in international format, according to E.164
       standard, prefixed with '+'.
      type: string
      pattern: '^\+[1-9][0-9]{4,14}$'
      example: "+123456789"
     ############################################################################
     #                                 Responces                                #
-    ############################################################################       
+    ############################################################################
     ErrorInfo:
       type: object
       required:
@@ -226,7 +226,7 @@ components:
           example:
             status: 401
             code: UNAUTHENTICATED
-            message: Request not authenticated due to missing, invalid, or 
+            message: Request not authenticated due to missing, invalid, or
              expired credentials
     Generic403:
       description: Client does not have sufficient permission
