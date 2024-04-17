@@ -96,7 +96,10 @@ paths:
         - Call Forwarding information retrieval
       security:
         - openId:
-         - call-forwarding-signal:call-forwardings:read
+            actions:  # Explicitly define allowed actions
+              - read  # Only read access is permitted
+            resources:  # Consider specifying resources if applicable
+              - call-forwarding-signals
       description: Retrieve the information about call forwarding service active
        on a phone number
       operationId: retrieveCallForwarding
