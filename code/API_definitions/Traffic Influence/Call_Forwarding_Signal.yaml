@@ -1,3 +1,4 @@
+---
 openapi: 3.0.3
 ############################################################################
 #                                     API info                             #
@@ -65,9 +66,7 @@ info:
     upholding the principles of transparency and user-centric data control.
     ## 4. API Documentation
     ## 4.1 Details
-
     TBD
-    
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -172,7 +171,8 @@ components:
     #                                 Types                                    #
     ############################################################################
     PhoneNumber:
-     description: A public identifier addressing a telephone subscription.
+     description: |
+      A public identifier addressing a telephone subscription.
       In mobile networks it corresponds to the MSISDN (Mobile Station
       International Subscriber Directory Number). In order to be globally unique
       it has to be formatted in international format, according to E.164
@@ -304,3 +304,4 @@ components:
             status: 504
             code: TIMEOUT
             message: Request timeout exceeded. Try later
+            
