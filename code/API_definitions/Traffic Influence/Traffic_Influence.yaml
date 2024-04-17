@@ -229,7 +229,7 @@ servers:
         default: http://localhost:9091
         description: API root
       basePath:
-        default: ti/v0
+        default: traffic-influence/v0
         description: Base path for the Traffic Influence API
 ############################################################################
 #                                     Tags                                #
@@ -247,7 +247,7 @@ paths:
     get:
       security:
         - openId:
-          - ti:traffic-influences:read
+          - 'traffic-influence:traffic-influences:read'
       parameters:
         - $ref: '#/components/parameters/x-correlator'
         - in: query
@@ -301,7 +301,7 @@ paths:
         - $ref: '#/components/parameters/x-correlator'
       security:
         - openId:
-          - ti:traffic-influences:write
+          - 'traffic-influence:traffic-influences:write'
       requestBody:
         description: Describes the request body
         required: true
@@ -363,7 +363,7 @@ paths:
         - $ref: '#/components/parameters/x-correlator'
       security:
         - openId:
-          - ti:traffic-influences:read
+          - 'traffic-influence:traffic-influences:read'
       responses:
         '200':
           description: OK.
@@ -398,7 +398,7 @@ paths:
         - $ref: '#/components/parameters/x-correlator'
       security:
         - openId:
-          - ti:traffic-influences:write
+          - 'traffic-influence:traffic-influences:write'
       requestBody:
         description: Describes the request body
         required: true
@@ -448,7 +448,7 @@ paths:
       operationId: deleteTrafficInfluence
       security:
         - openId:
-          - ti:traffic-influences:write
+          - 'traffic-influence:traffic-influences:write'
       parameters:
         - $ref: '#/components/parameters/x-correlator'
         - name: callbackUrl
