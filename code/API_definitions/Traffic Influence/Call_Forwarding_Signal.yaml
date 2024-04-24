@@ -46,7 +46,7 @@ info:
     service is active on this phone number.\
     \
     **CreateCallForwardingSignal**
-    This is the resource the API Consumer uses to define the phone number to 
+    This is the resource the API Consumer uses to define the phone number to
     be verified about the status of the Network Call Forwarding service.\
     \
     **CallForwardingSignal**
