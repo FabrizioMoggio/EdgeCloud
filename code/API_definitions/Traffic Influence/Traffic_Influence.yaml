@@ -484,6 +484,7 @@ paths:
 components:
   securitySchemes:
     openId:
+      description: to support Consent Management    
       type: openIdConnect
       openIdConnectUrl: https://example.com/.well-known/openid-configuration
 
