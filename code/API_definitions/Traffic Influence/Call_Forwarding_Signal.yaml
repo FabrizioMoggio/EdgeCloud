@@ -8,19 +8,19 @@ info:
   version: 0.1.7-wip
   description: |
     ## Overview
-    The Call Forwarding Signal (CFS) API provides the API Consumer with 
+    The Call Forwarding Signal (CFS) API provides the API Consumer with
     information about the status of the Call Forwading Service on a specific
     phone number.
     ## 1. Introduction
     The Call Forwarding Service is provided by the Network to a phone
     number. This service redirects the incoming call to that phone number
     to an alternative destination such another phone number or a voice mail
-    system. There are two main types of call forwarding settings: 
+    system. There are two main types of call forwarding settings:
     unconditional and conditional.
     The CFS API can be invoked to detect if the unconditional
     call forwarding service is active. The CSF API can also be invoked to
-    get the general status of the Call Forwarding Service (incactive, conditional,
-    unconditional).\
+    get the general status of the Call Forwarding Service (incactive, 
+    conditional, unconditional).\
     \
     **Example use cases:**\
     \
@@ -57,7 +57,7 @@ info:
     number (PhoneNumber)\
     \
     **CallForwardingSignal**
-    This is the resource the API Consumer gets back, containing the information 
+    This is the resource the API Consumer gets back, containing the information
     about the general status of the Network Call Forwarding service for the
     specified phone number.\
     \
@@ -91,16 +91,15 @@ info:
     described in chapter 3.\
     The API Consumer creates a resource (CreateCallForwardingSignal) containing
     the phone number (PhoneNumber) to be checked.\
-    The API Consumer can request the API Producer for the status of the 
-    Unconditional Call Forwarding service using the 
-    unconditional-call-forwardings POST method. A boolean, with the information 
-    about the activation status of the call forwarding service, will be 
+    The API Consumer can request the API Producer for the status of the
+    Unconditional Call Forwarding service using the
+    unconditional-call-forwardings POST method. A boolean, with the information
+    about the activation status of the call forwarding service, will be
     provided back via the UnconditionalCallForwardingSignal resource.\
     The API Consumer can also request the API Producer for the generic status of
     the Call Forwarding service using the call-forwardings POST method. A string
     with the information of the type of call forwarding service will be provided
     back via the CallForwardingSignal resource.
-    
     ## 4.2 FAQ's
     (FAQs will be added in a later version of the documentation)
     ## 4.3 Release Notes
@@ -146,9 +145,9 @@ paths:
       security:
         - openId:
             - 'call-forwarding-signal:unconditional-call-forwardings:read'
-      summary: Retrieve the information about the status of the 
+      summary: Retrieve the information about the status of the
        unconditional call forwarding service on a phone number (PhoneNumber)
-      description: This endpoint provides information about the status 
+      description: This endpoint provides information about the status
        of the unconditional call forwarding, beeing active or not.
       operationId: retrieveUnconditionalCallForwarding
       parameters:
@@ -168,7 +167,7 @@ paths:
           content:
             application/json:
               schema:
-               $ref: '#/components/schemas/UnconditionalCallForwardingSignal'
+                $ref: '#/components/schemas/UnconditionalCallForwardingSignal'
         "400":
           $ref: "#/components/responses/Generic400"
         '404':
@@ -192,7 +191,7 @@ paths:
             - 'call-forwarding-signal:call-forwardings:read'
       summary: Retrieve the information about the type of call forwarding
        service active on a phone number (PhoneNumber)
-      description: This endpoint provides information about wich type of 
+      description: This endpoint provides information about wich type of
        call forwarding service is active
       operationId: retrieveCallForwarding
       parameters:
@@ -226,7 +225,7 @@ paths:
         "403":
           $ref: "#/components/responses/Generic403"
         "503":
-          $ref: "#/components/responses/Generic503"          
+          $ref: "#/components/responses/Generic503"  
 ############################################################################
 #                                 Components                               #
 ############################################################################
