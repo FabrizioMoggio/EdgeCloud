@@ -19,7 +19,7 @@ info:
     unconditional and conditional.
     The CFS API can be invoked to detect if the unconditional
     call forwarding service is active. The CSF API can also be invoked to
-    get the general status of the Call Forwarding Service (incactive, 
+    get the general status of the Call Forwarding Service (incactive,
     conditional, unconditional).\
     \
     **Example use cases:**\
@@ -129,11 +129,11 @@ servers:
 ############################################################################
 tags:
   - name: Unconditional Call Forwarding information retrieval
-    description: Provides information on Unconditional Call Forwarding 
+    description: Provides information on Unconditional Call Forwarding
      settings for the provided phone number (PhoneNumber)
   - name: Call Forwarding information retrieval
     description: Provides information on Call Forwarding settings for the
-     provided phone number (PhoneNumber).    
+     provided phone number (PhoneNumber).
 ############################################################################
 #                                     Paths                                #
 ############################################################################
@@ -225,7 +225,7 @@ paths:
         "403":
           $ref: "#/components/responses/Generic403"
         "503":
-          $ref: "#/components/responses/Generic503"  
+          $ref: "#/components/responses/Generic503"
 ############################################################################
 #                                 Components                               #
 ############################################################################
