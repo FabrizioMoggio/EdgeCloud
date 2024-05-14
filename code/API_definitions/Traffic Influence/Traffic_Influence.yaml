@@ -210,11 +210,11 @@ info:
     invoked with a user Device identifier (“Device”). For each user Device,
     a TI API invocation is required.
     ## Release Notes
-    The Traffic Influence API reduces the complexity of the 3GPP Traffic 
+    The Traffic Influence API reduces the complexity of the 3GPP Traffic
     Influence API exposed by the 3GPP Network Exposure Function (NEF) [1]. While
     the 3GPP TI API offers fastest routing activation and user mobility among
     different edge sites, this version of the CAMARA Traffic Influence API
-    covers only the fastest routing activation, also for selected users. 
+    covers only the fastest routing activation, also for selected users.
     User mobility will be introduced in a future version.\
     \
     **Enhancements with respect to the previous release V0.8.1:**
@@ -240,7 +240,7 @@ info:
     - Added response code 400 (bad request) to POST
     - General improvement in documentation
     - applicationId changed into appId and instanceId changed into appInstanceId
-    - Alignement of parameters with EdgeCloud_LCM: applicationId changed into 
+    - Alignement of parameters with EdgeCloud_LCM: applicationId changed into
         appId and instanceId changed into appInstanceId
     - Modified reference to CAMARA Authorization guidelines link
     - Telco Edge Site changed in Edge Cloud Zone
@@ -263,7 +263,7 @@ info:
     - Removed unused error code SessionNotFound404
     - Alignement of parameters with EdgeCloud_LCM: applicationId changed into
         appId and instanceId changed into appInstanceId
-    - Adoption of OpenId authentication for Consent Management. Client 
+    - Adoption of OpenId authentication for Consent Management. Client
         Credential is removed
     - Intruduced xcorrelator
     - General alignment with CAMARA on returned Errors
