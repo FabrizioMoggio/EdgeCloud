@@ -1,0 +1,420 @@
+---
+openapi: 3.0.3
+############################################################################
+#                                     API info                             #
+############################################################################
+info:
+  title: Call Forwarding Signal API
+  version: 0.1.8-wip
+  description: |
+    ## Overview
+    The Call Forwarding Signal (CFS) API provides the API Consumer with
+    information about the status of the Call Forwading Service on a specific
+    phone number.
+    ## 1. Introduction
+    The Call Forwarding Service is provided by the Network to a phone
+    number. This service redirects the incoming call to that phone number
+    to an alternative destination such another phone number or a voice mail
+    system. There are two main types of call forwarding settings:
+    unconditional and conditional.
+    The CFS API can be invoked to detect if the unconditional
+    call forwarding service is active. The CSF API can also be invoked to
+    get the general status of the Call Forwarding Service (inactive,
+    conditional, unconditional).\
+    \
+    **Example use cases:**\
+    \
+    [**Bank Frauds**](https://github.com/camaraproject/CallForwardingSignal/\
+    blob/main/documentation/API_documentation/CFS_UserStory_UseCase-1.md)\
+    \
+    [**Alert Interception**](https://github.com/camaraproject/\
+    CallForwardingSignal/discussions/3#discussioncomment-8701847)
+    ## 2. Quick Start
+    The CFS API is a REST API based on the CreateCallForwardingSignal resource.
+    This resource is filled during the API invokation, by the API Consumer,
+    with the phone number on which the Call Forwarding Service status must be
+    verified.\
+    \
+    Before starting to use the Call Forwarding API, the developer needs to know
+    about the below specified details:\
+    \
+    **Base-Url**
+    The RESTful CFS API endpoint, for example
+    [**https://tim-api.developer.tim.it/callforwardingsignal**](https://tim-api\
+    .developer.tim.it/callforwarding\signal)\
+    \
+    **PhoneNumber**
+    This is the end user phone number. The CFS API verifies if a call forwarding
+    service is active on this phone number.\
+    \
+    **CreateCallForwardingSignal**
+    This is the resource the API Consumer uses to define the phone number to
+    be verified about the status of the Network Call Forwarding service.\
+    \
+    **UnconditionalCallForwardingSignal**
+    This is the resource the API Consumer gets back, containing the information
+    about the Unconditional Call Forwarding Service status for the given phone
+    number (PhoneNumber)\
+    \
+    **CallForwardingSignal**
+    This is the resource the API Consumer gets back, containing the information
+    about the general status of the Network Call Forwarding service for the
+    specified phone number.\
+    \
+    The CFS API provides two endpoints fulfilling the following intents:
+    - **unconditional-call-forwardings**: Is the unconditional call fwd service
+    active on a specific phone number?
+    - **call-forwardings**: Which is the status of the call forwarding for a
+    specific phone number?
+    ## 3. Authorization and authentication
+    CAMARA guidelines defines a set of authorization flows which can grant API
+    clients access to the API functionality, as outlined in the document
+    [CAMARA-API-access-and-user-consent.md](https:\
+    //github.com/camaraproject/IdentityAndConsentManagement/blob/main/\
+    documentation/CAMARA-API-access-and-user-consent.md).
+    Which specific authorization flows are to be used will be determined during
+    onboarding process, happening between the API Client and the
+    Telco Operator exposing the API, taking into account the declared purpose
+    for accessing the API, while also being subject to the prevailing legal
+    framework dictated by local legislation.
+    \
+    It is important to remark that in cases where personal user data is
+    processed by the API, and users can exercise their rights through mechanisms
+    such as opt-in and/or opt-out, the use of 3-legged access tokens becomes
+    mandatory.
+    This measure ensures that the API remains in strict compliance with user
+    privacy preferences and regulatory obligations,
+    upholding the principles of transparency and user-centric data control.
+    ## 4. API Documentation
+    ## 4.1 Details
+    The CFS API is invoked by an API Consumer after the Consent Management flow
+    described in chapter 3.\
+    The API Consumer creates a resource (CreateCallForwardingSignal) containing
+    the phone number (PhoneNumber) to be checked.\
+    The API Consumer can request the API Producer for the status of the
+    Unconditional Call Forwarding service using the
+    unconditional-call-forwardings POST method. A boolean, with the information
+    about the activation status of the call forwarding service, will be
+    provided back via the UnconditionalCallForwardingSignal resource.\
+    The API Consumer can also request the API Producer for the generic status of
+    the Call Forwarding service using the call-forwardings POST method. A string
+    with the information of the type of call forwarding service will be provided
+    back via the CallForwardingSignal resource.
+    ## 4.2 FAQ's
+    (FAQs will be added in a later version of the documentation)
+    ## 4.3 Release Notes
+    First draft for the CFS API.
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  contact:
+    email: project-email@sample.com
+externalDocs:
+  description: Product documentation at Camara
+  url: https://github.com/camaraproject/CallForwardingSignal
+############################################################################
+#                                     Servers                              #
+############################################################################
+servers:
+  - url: "{apiRoot}/call-forwarding-signal/vwip"
+    variables:
+      apiRoot:
+        default: http://localhost:9091
+        description: API root for the Call Forwarding Signal API
+############################################################################
+#                                     Tags                                #
+############################################################################
+tags:
+  - name: Unconditional Call Forwarding information retrieval
+    description: Provides information on Unconditional Call Forwarding
+     settings for the provided phone number (PhoneNumber)
+  - name: Call Forwarding information retrieval
+    description: Provides information on Call Forwarding settings for the
+     provided phone number (PhoneNumber).
+############################################################################
+#                                     Paths                                #
+############################################################################
+paths:
+  /unconditional-call-forwardings:
+    post:
+      tags:
+        - Unconditional Call Forwarding information retrieval
+      security:
+        - openId:
+            - 'call-forwarding-signal:unconditional-call-forwardings:read'
+      summary: Retrieve the information about the status of the
+       unconditional call forwarding service on a phone number (PhoneNumber)
+      description: This endpoint provides information about the status
+       of the unconditional call forwarding, beeing active or not.
+      operationId: retrieveUnconditionalCallForwarding
+      parameters:
+        - $ref: '#/components/parameters/x-correlator'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCallForwardingSignal'
+        required: true
+      responses:
+        '200':
+          description: OK.
+          headers:
+            x-correlator:
+              $ref: '#/components/headers/x-correlator'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnconditionalCallForwardingSignal'
+        "400":
+          $ref: "#/components/responses/Generic400"
+        '404':
+          $ref: '#/components/responses/Generic404'
+        '500':
+          $ref: '#/components/responses/Generic500'
+        '504':
+          $ref: '#/components/responses/Generic504'
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "503":
+          $ref: "#/components/responses/Generic503"
+  /call-forwardings:
+    post:
+      tags:
+        - Call Forwarding information retrieval
+      security:
+        - openId:
+            - 'call-forwarding-signal:call-forwardings:read'
+      summary: Retrieve the information about the type of call forwarding
+       service active on a phone number (PhoneNumber)
+      description: This endpoint provides information about wich type of
+       call forwarding service is active
+      operationId: retrieveCallForwarding
+      parameters:
+        - $ref: '#/components/parameters/x-correlator'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCallForwardingSignal'
+        required: true
+      responses:
+        '200':
+          description: OK.
+          headers:
+            x-correlator:
+              $ref: '#/components/headers/x-correlator'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallForwardingSignal'
+        "400":
+          $ref: "#/components/responses/Generic400"
+        '404':
+          $ref: '#/components/responses/Generic404'
+        '500':
+          $ref: '#/components/responses/Generic500'
+        '504':
+          $ref: '#/components/responses/Generic504'
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "503":
+          $ref: "#/components/responses/Generic503"
+############################################################################
+#                                 Components                               #
+############################################################################
+components:
+  securitySchemes:
+    openId:
+      description: to support Consent Management
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+  parameters:
+    x-correlator:
+      name: x-correlator
+      in: header
+      description: Correlation id for the different services
+      schema:
+        type: string
+  headers:
+    x-correlator:
+      description: Correlation id for the different services
+      schema:
+        type: string
+  ############################################################################
+  #                                 Resources                                #
+  ############################################################################
+  schemas:
+    UnconditionalCallForwardingSignal:
+      description: resource containing the information about the Unconditional
+       Call Forwarding Service for the given phone number (PhoneNumber)
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: Indicates if the unconditional call forwarding service
+           is active.
+    CallForwardingSignal:
+      description: resource containing the list of the Call
+       Forwarding Services active for the given phone number (PhoneNumber)
+      type: array
+      items:
+        type: string
+        enum:
+          - 'inactive'
+          - 'unconditional'
+          - 'conditional'
+      example: 
+        - 'unconditional'
+        - 'conditional'
+      minItems: 1
+    ############################################################################
+    #                                 Request                                  #
+    ############################################################################
+    CreateCallForwardingSignal:
+      description: resource containing the phone number (PhoneNumber) regarding
+       which the Call Forwarding Service must be checked
+      type: object
+      properties:
+        phoneNumber:
+          $ref: "#/components/schemas/PhoneNumber"
+    ############################################################################
+    #                                 Types                                    #
+    ############################################################################
+    PhoneNumber:
+      description: A public identifier addressing a telephone subscription.
+       In mobile networks it corresponds to the MSISDN (Mobile Station
+       International Subscriber Directory Number). In order to be globally
+       unique it has to be formatted in international format, according to E.164
+       standard, prefixed with '+'.
+      type: string
+      pattern: '^\+[1-9][0-9]{4,14}$'
+      example: "+123456789"
+    ############################################################################
+    #                                 Responces                                #
+    ############################################################################
+    ErrorInfo:
+      description: error information
+      type: object
+      required:
+        - status
+        - code
+        - message
+      properties:
+        status:
+          type: integer
+          description: HTTP status code returned along with this error response
+        code:
+          type: string
+          description: Code given to this error
+        message:
+          type: string
+          description: Detailed error description
+  responses:
+    Generic400:
+      description: Problem with the client request
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 400
+            code: INVALID_ARGUMENT
+            message: Client specified an invalid argument, request body or query
+             param
+    Generic401:
+      description: Authentication problem with the client request
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 401
+            code: UNAUTHENTICATED
+            message: Request not authenticated due to missing, invalid, or
+             expired credentials
+    Generic403:
+      description: Client does not have sufficient permission
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          examples:
+            PermissionDenied:
+              value:
+                status: 403
+                code: PERMISSION_DENIED
+                message: Client does not have sufficient permissions to perform
+                 this action
+            InvalidTokenContext:
+              value:
+                status: 403
+                code: INVALID_TOKEN_CONTEXT
+                message: Phone number cannot be deducted from access token
+                 context
+    Generic404:
+      description: The specified resource was not found
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 404
+            code: CALL_FORWARDING.UNKNOWN_PHONE_NUMBER
+            message: Call forwarding check can't be done because the phone
+             number is unknown
+    Generic500:
+      description: Server error
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 500
+            code: INTERNAL
+            message: Server error
+    Generic503:
+      description: Service unavailable. Typically the server is down
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 503
+            code: UNAVAILABLE
+            message: Service unavailable
+    Generic504:
+      description: Request time exceeded. If it happens repeatedly, consider
+       reducing the request complexity
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            status: 504
+            code: TIMEOUT
+            message: Request timeout exceeded. Try later
